@@ -1,5 +1,6 @@
 package com.zerobank.stepdefnitions;
 
+import com.zerobank.pages.AccountActivity;
 import com.zerobank.pages.LoginPage;
 import com.zerobank.utilities.BrowserUtils;
 import com.zerobank.utilities.ConfigurationReader;
@@ -20,15 +21,17 @@ public class FindTransactionsDefs {
 
     @Given("the user accesses the Find Transactions tab")
     public void the_user_accesses_the_Find_Transactions_tab() {
-        Driver.get().get(ConfigurationReader.get("url"));
-        Driver.get().findElement(By.id("signin_button")).click();
-        String username ="username";
-        String password ="password";
-        new LoginPage().login(username,password);
-        Driver.get().findElement(By.id("primary-button")).click();
-        BrowserUtils.waitFor(2);
-        Driver.get().findElement(By.xpath("//*[@id=\"account_activity_link\"]")).click();
-        BrowserUtils.waitFor(2);
+        String url=ConfigurationReader.get("url");
+        Driver.get().get(url);
+        String username=ConfigurationReader.get("username");
+        String password=ConfigurationReader.get("password");
+
+        LoginPage loginPage=new LoginPage();
+        loginPage.login(username,password);
+        loginPage.errorPageBackSafety.click();
+
+        AccountActivity accountActivity=new AccountActivity();
+        accountActivity.accountActivityLink.click();;
         Driver.get().findElement(By.xpath("//*[@id=\"tabs\"]/ul/li[2]/a")).click();
         BrowserUtils.waitFor(2);
 

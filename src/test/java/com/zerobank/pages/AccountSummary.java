@@ -11,11 +11,12 @@ public class AccountSummary {
     public AccountSummary(){
         PageFactory.initElements(Driver.get(), this);
     }
+
     @FindBy(xpath="//*[@id='onlineBankingMenu']/div/strong")
     public WebElement onlineBankingLink;
 
     @FindBy(xpath="//*[@id='account_summary_link']")
-    public WebElement accountSummary;
+    public WebElement accountSummaryLink;
 
     @FindBy(xpath="//h2[@class=\"board-header\"])[1]")
     public WebElement cashAccounts;

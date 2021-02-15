@@ -1,20 +1,30 @@
 package com.zerobank.stepdefnitions;
 
+import com.zerobank.pages.AccountSummary;
+import com.zerobank.pages.LoginPage;
+import com.zerobank.utilities.Driver;
+import io.cucumber.java.After;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.Assert;
 
 public class AccountSummaryDefs {
 
     @When("the user navigate Online Banking, Account Summary")
     public void the_user_navigate_Online_Banking_Account_Summary() {
-
+        AccountSummary accountSummary=new AccountSummary();
+        accountSummary.onlineBankingLink.click();
+        accountSummary.accountSummaryLink.click();
 
     }
 
     @Then("page title should be {string}")
-    public void page_title_should_be(String string) {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+    public void page_title_should_be(String expected) {
+
+
+        Assert.assertEquals(expected,Driver.get().getTitle());
+
+
     }
 
     @Then("the user should be able to see following account types")
