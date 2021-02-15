@@ -34,6 +34,12 @@ public class AccountActivity {
     @FindBy(xpath="//*[@id=\"tabs\"]/ul/li[2]/a")
     public WebElement findTransactionLink;
 
+    @FindBy(xpath="//select['aa_accountId']//option")
+    public List <WebElement> dropdownList;
+
+    @FindBy(xpath="//div['all_transactions_for_account']//tr//th")
+    public List <WebElement> transactionColumn;
+
 
 
 

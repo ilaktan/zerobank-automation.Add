@@ -2,11 +2,15 @@ package com.zerobank.stepdefnitions;
 
 import com.zerobank.pages.AccountSummary;
 import com.zerobank.pages.LoginPage;
+import com.zerobank.utilities.BrowserUtils;
+import com.zerobank.utilities.ConfigurationReader;
 import com.zerobank.utilities.Driver;
 import io.cucumber.java.After;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+
+import java.util.List;
 
 public class AccountSummaryDefs {
 
@@ -28,27 +32,27 @@ public class AccountSummaryDefs {
     }
 
     @Then("the user should be able to see following account types")
-    public void the_user_should_be_able_to_see_following_account_types(io.cucumber.datatable.DataTable dataTable) {
-        // Write code here that turns the phrase above into concrete actions
-        // For automatic transformation, change DataTable to one of
-        // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-        // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-        // Double, Byte, Short, Long, BigInteger or BigDecimal.
-        //
-        // For other transformations you can register a DataTableType.
-        throw new io.cucumber.java.PendingException();
+    public void the_user_should_be_able_to_see_following_account_types(List<String> menuOptions) {
+
+
+        AccountSummary accountSummary=new AccountSummary();
+
+
+
+        List<String> actualOptions = BrowserUtils.getElementsText(accountSummary.menuOptions);
+
+        Assert.assertEquals(menuOptions,actualOptions);
+
     }
 
     @Then("the user should be able to see following credit accounts columns")
-    public void the_user_should_be_able_to_see_following_credit_accounts_columns(io.cucumber.datatable.DataTable dataTable) {
-        // Write code here that turns the phrase above into concrete actions
-        // For automatic transformation, change DataTable to one of
-        // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-        // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-        // Double, Byte, Short, Long, BigInteger or BigDecimal.
-        //
-        // For other transformations you can register a DataTableType.
-        throw new io.cucumber.java.PendingException();
+    public void the_user_should_be_able_to_see_following_credit_accounts_columns(List<String> menuOptions) {
+        AccountSummary accountSummary=new AccountSummary();
+
+        List<String> actualOptions = BrowserUtils.getElementsText(accountSummary.CreditAccountTable);
+
+        Assert.assertEquals(menuOptions,actualOptions);
+
     }
 
 }

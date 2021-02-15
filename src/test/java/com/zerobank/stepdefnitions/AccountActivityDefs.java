@@ -2,11 +2,16 @@ package com.zerobank.stepdefnitions;
 
 import com.zerobank.pages.AccountActivity;
 import com.zerobank.pages.AccountSummary;
+import com.zerobank.utilities.BrowserUtils;
 import com.zerobank.utilities.Driver;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
+
+import java.util.List;
 
 public class AccountActivityDefs {
     @When("the user clicks on {string} link on the Account Summary page")
@@ -41,25 +46,35 @@ public class AccountActivityDefs {
         if(expectedTitle.equals("Savings")){
 
 
-            String accountSaving= Driver.get().findElement(By.xpath("//a[@href='/bank/account-activity.html?accountId=1']")).getText();;
-            Assert.assertTrue(accountSaving.contains(expectedTitle));
+
+            String accountSaving= Driver.get().findElement(By.xpath("(//select['aa_accountId']//option)[1]")).getText();;
+           Assert.assertTrue(accountSaving.contains(expectedTitle));
 
 
         }else if(expectedTitle.equals("Credit Card")){
 
-            Driver.get().findElements(By.xpath("//select['aa_accountId']//option")).get(5).isSelected();
-
+            String accountSaving= Driver.get().findElement(By.xpath("(//select['aa_accountId']//option)[5]")).getText();;
+           Assert.assertTrue(accountSaving.contains(expectedTitle));
 
 
         }else if(expectedTitle.equals("Checking")){
 
-            Driver.get().findElements(By.xpath("//select['aa_accountId']//option")).get(2).isSelected();
+            String accountSaving= Driver.get().findElement(By.xpath("(//select['aa_accountId']//option)[2]")).getText();;
+            Assert.assertTrue(accountSaving.contains(expectedTitle));
+
+
+
+        }else if(expectedTitle.equals("Brokerage")){
+
+            String accountSaving= Driver.get().findElement(By.xpath("(//select['aa_accountId']//option)[6]")).getText();;
+            Assert.assertTrue(accountSaving.contains(expectedTitle));
 
 
 
         }else if(expectedTitle.equals("loan")){
 
-            Driver.get().findElements(By.xpath("//select['aa_accountId']//option")).get(4).isSelected();
+            String accountSaving= Driver.get().findElement(By.xpath("(//select['aa_accountId']//option)[4]")).getText();;
+            Assert.assertTrue(accountSaving.contains(expectedTitle));
 
 
 
@@ -71,4 +86,34 @@ public class AccountActivityDefs {
 
 
     }
+
+    @When("the user navigate Online Banking, Account Activity")
+    public void the_user_navigate_Online_Banking_Account_Activity() {
+        AccountSummary accountSummary=new AccountSummary();
+        accountSummary.onlineBankingLink.click();
+        AccountActivity accountActivity=new AccountActivity();
+        accountActivity.accountActivityLink.click();
+
+    }
+
+    @Then("the user should be able to see following options")
+    public void the_user_should_be_able_to_see_following_options(List<String> menuOptions) {
+
+        AccountActivity accountActivity=new AccountActivity();
+        List<String> actualOptions = BrowserUtils.getElementsText(accountActivity.dropdownList);
+
+        Assert.assertEquals(menuOptions,actualOptions);
+
+
+    }
+
+    @Then("the user should be able to see following column names")
+    public void the_user_should_be_able_to_see_following_column_names(List<String> menuOptions) {
+        AccountActivity accountActivity=new AccountActivity();
+        List<String> actualOptions = BrowserUtils.getElementsText(accountActivity.transactionColumn);
+
+        Assert.assertEquals(menuOptions,actualOptions);
+
+    }
+
 }

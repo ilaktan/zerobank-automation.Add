@@ -18,7 +18,7 @@ public class AccountSummary {
     @FindBy(xpath="//*[@id='account_summary_link']")
     public WebElement accountSummaryLink;
 
-    @FindBy(xpath="//h2[@class=\"board-header\"])[1]")
+    @FindBy(xpath="(//h2[@class=\"board-header\"])[1]")
     public WebElement cashAccounts;
 
     @FindBy(xpath="(//h2[@class=\"board-header\"])[2]")
@@ -29,6 +29,9 @@ public class AccountSummary {
 
     @FindBy(xpath="(//h2[@class=\"board-header\"])[4]")
     public WebElement loanAccount;
+
+    @FindBy(xpath = "//h2[@class=\"board-header\"]")
+    public List<WebElement> menuOptions;
 
     @FindBy(xpath="(//table[@class='table'])[3]/thead/tr/th")
     public List <WebElement> CreditAccountTable;
