@@ -1,6 +1,8 @@
 package com.zerobank.stepdefnitions;
 
+import com.zerobank.pages.AccountSummary;
 import com.zerobank.pages.LoginPage;
+import com.zerobank.pages.PayBills;
 import com.zerobank.utilities.BrowserUtils;
 import com.zerobank.utilities.ConfigurationReader;
 import com.zerobank.utilities.Driver;
@@ -16,19 +18,14 @@ public class PayeeDefs {
 
     @Given("Add New Payee tab")
     public void add_New_Payee_tab() {
-        Driver.get().get(ConfigurationReader.get("url"));
-        Driver.get().findElement(By.id("signin_button")).click();
-        String username ="username";
-        String password ="password";
-        new LoginPage().login(username,password);
-        Driver.get().findElement(By.id("primary-button")).click();
+
+        AccountSummary accountSummary=new AccountSummary();
+        accountSummary.onlineBankingLink.click();
+
+        PayBills payBills=new PayBills();
+        payBills.pay_bills_link.click();
+        payBills.addNewPayeeLink.click();
         BrowserUtils.waitFor(2);
-        Driver.get().findElement(By.xpath("//*[strong='Online Banking']//strong")).click();
-        BrowserUtils.waitFor(2);
-        Driver.get().findElement(By.id("pay_bills_link")).click();
-        BrowserUtils.waitFor(2);
-        Driver.get().findElement(By.xpath("//a[@href='#ui-tabs-2']")).click();
-        BrowserUtils.waitFor(3);
 
     }
 
@@ -60,6 +57,49 @@ public class PayeeDefs {
         Driver.get().findElement(By.xpath("//*[@id=\"alert_content\"]")).getText();
         Assert.assertEquals(expected,Driver.get().findElement(By.xpath("//*[@id=\"alert_content\"]")).getText());
     }
+    @When("the user navigate Online Banking, Pay Bill")
+    public void the_user_navigate_Online_Banking_Pay_Bill() {
+        AccountSummary accountSummary=new AccountSummary();
+        accountSummary.onlineBankingLink.click();
+        PayBills payBills=new PayBills();
+        payBills.pay_bills_link.click();
+    }
 
+    @When("the user completes the pay operation")
+    public void the_user_completes_the_pay_operation() {
+
+        PayBills payBills=new PayBills();
+
+        payBills.amountLink.sendKeys("1000");
+
+        payBills.dateInbox.sendKeys("2021-02-18");
+        payBills.payClickLink.click();
+
+    }
+
+    @Then("the user should see {string} message")
+    public void the_user_should_see_message(String expected) {
+        PayBills payBills=new PayBills();
+
+        Assert.assertEquals(expected,payBills.successfullySubmitted.getText());
+
+    }
+
+    @When("user tries to make a payment without entering the amount or date")
+    public void user_tries_to_make_a_payment_without_entering_the_amount_or_date() {
+        PayBills payBills=new PayBills();
+        payBills.payClickLink.click();
+
+    }
+    @Then("the user should be able to see {string} message")
+    public void the_user_should_be_able_to_see_message(String expected) {
+        PayBills payBills=new PayBills();
+        String message = payBills.amountLink.getAttribute("validationMessage");
+        //System.out.println("message = " + message);
+        Assert.assertEquals(expected,message);
+
+
+
+    }
 
 }

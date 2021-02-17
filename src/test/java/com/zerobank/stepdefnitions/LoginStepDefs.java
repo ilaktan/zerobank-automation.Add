@@ -35,7 +35,6 @@ public class LoginStepDefs {
     @Then("the {string} page should be displayed")
     public void the_page_should_be_displayed(String expectedTitle) {
 
-
         Assert.assertEquals(expectedTitle,Driver.get().getTitle());
     }
 

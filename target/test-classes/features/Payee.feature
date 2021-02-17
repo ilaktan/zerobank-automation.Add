@@ -1,6 +1,12 @@
 
 Feature: Add new payee under pay bills
+  Background:
+    Given the user is on the login page
+    When the user enters valid user name and password
+    Then user should be able to login
+
   Scenario: Add a new payee
+
     Given Add New Payee tab
     And creates new payee using following information
       |Payee Name|The Law Offices of Hyde, Price & Scharks|
